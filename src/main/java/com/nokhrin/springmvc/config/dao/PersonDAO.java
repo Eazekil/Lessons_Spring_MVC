@@ -12,21 +12,17 @@ public class PersonDAO {
 
     {
         people=new ArrayList<>();
-        people.add(new Person(++PEOPLE_COUNT,"Orion"));
-        people.add(new Person(++PEOPLE_COUNT,"Saturn"));
-        people.add(new Person(++PEOPLE_COUNT,"Pluto"));
-        people.add(new Person(++PEOPLE_COUNT,"Jupiter"));
+        people.add(new Person(++PEOPLE_COUNT,"Simon",21,"simon@mail.ru"));
+        people.add(new Person(++PEOPLE_COUNT,"Andrew",22,"andrew@mail.ru"));
+        people.add(new Person(++PEOPLE_COUNT,"James",23,"james@mail.ru"));
+        people.add(new Person(++PEOPLE_COUNT,"John",24,"john@mail.ru"));
     }
     public List<Person> index(){
         return people;
     }
 
     public Person show(int id){
-        Person showPerson=null;
-        for(Person person:people){
-            if(person.getId()==id)showPerson=person;
-        }
-        return showPerson;
+        return people.stream().filter(person -> person.getId() == id).findAny().orElse(null);
     }
     public void save(Person person){
         person.setId(++PEOPLE_COUNT);
@@ -35,6 +31,8 @@ public class PersonDAO {
     public void update(int id,Person updatedPerson){
         Person personToBeUpdated=show(id);
         personToBeUpdated.setName(updatedPerson.getName());
+        personToBeUpdated.setAge(updatedPerson.getAge());
+        personToBeUpdated.setEmail(updatedPerson.getEmail());
     }
     public void delete(int id){
         people.removeIf(p -> p.getId() ==id);
